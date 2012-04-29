@@ -37,3 +37,4 @@ scan_makefile_in.awk
 *.opt
 *.ncb
 run-tests.php
+test.php
