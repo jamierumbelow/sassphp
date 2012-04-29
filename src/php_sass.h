@@ -11,8 +11,13 @@
 #include <ext/standard/info.h>
 #include <Zend/zend_extensions.h>
 
-int sass_setup(TSRMLS_D);
+#include "lib/libsass/sass_interface.h"
 
-PHP_FUNCTION(sass_test);
+zend_class_entry *sass_ce;
+
+PHP_METHOD(Sass, __construct);
+PHP_METHOD(Sass, parse);
+PHP_METHOD(Sass, parse_file);
+PHP_METHOD(Sass, parse_directory);
 
 #endif
