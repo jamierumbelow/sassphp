@@ -1,3 +1,11 @@
+/**
+ * Sass
+ * PHP bindings to libsass - fast, native Sass parsing in PHP!
+ * 
+ * https://github.com/jamierumbelow/sassphp
+ * Copyright (c)2012 Jamie Rumbelow <http://jamierumbelow.net>
+ */
+
 #ifndef PHP_SASS_H
 #define PHP_SASS_H
 
@@ -18,6 +26,5 @@ zend_class_entry *sass_ce;
 PHP_METHOD(Sass, __construct);
 PHP_METHOD(Sass, parse);
 PHP_METHOD(Sass, parse_file);
-PHP_METHOD(Sass, parse_directory);
 
 #endif

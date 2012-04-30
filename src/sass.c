@@ -1,53 +1,90 @@
+/**
+ * Sass
+ * PHP bindings to libsass - fast, native Sass parsing in PHP!
+ * 
+ * https://github.com/jamierumbelow/sassphp
+ * Copyright (c)2012 Jamie Rumbelow <http://jamierumbelow.net>
+ */
+
 #include "php_sass.h"
 
-PHP_METHOD(Sass, __construct) { }
+/* --------------------------------------------------------------
+ * Sass
+ * ------------------------------------------------------------ */
 
+/**
+ * $sass->parse(string $source);
+ *
+ * Parse a string of Sass; a basic input -> output affair.
+ */
 PHP_METHOD(Sass, parse)
 {
+	// Define our source string and source string length
 	char *source;
 	int source_len;
 
+	// Use zend_parse_parameters() to grab our source from the function call
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &source, &source_len) == FAILURE)
 	{
 		return;
 	}
 
+	// Create a new sass_context
 	struct sass_context* context = sass_new_context();
 	
+	// We're not including anything and for the time being we only want to support
+	// the nested style of output and not compressed.
 	context->options.include_paths = "";
 	context->options.output_style = SASS_STYLE_NESTED;
 
+	// "Hand over the source, buddy!"
+	// "Which one, béchamel or arrabbiata?"
 	context->input_string = source;
 
+	// Compile it!
 	sass_compile(context);
 
+	// Check the context for any errors...
 	if (context->error_status)
 	{
+		// @todo throw an exception!
 		RETURN_STRING(context->error_message, 1);
 	}
+
+	// Do we have an output?
 	else if (context->output_string)
 	{
+		// Send it over to PHP.
 		RETURN_STRING(context->output_string, 1);
 	}
 
+	// There's been a major issue
+	else
+	{
+		// unknown internal error... throw an exception?
+	}
+
+	// Over and out.
 	sass_free_context(context);
 }
 
+/**
+ * $sass->parse_file(string $file_name);
+ *
+ * Parse a whole file FULL of Sass and return the CSS output
+ */
 PHP_METHOD(Sass, parse_file)
 {
 
 }
 
-PHP_METHOD(Sass, parse_directory)
-{
-
-}
+/* --------------------------------------------------------------
+ * PHP EXTENSION INFRASTRUCTURE
+ * ------------------------------------------------------------ */
 
 zend_function_entry sass_methods[] = {
-    PHP_ME(Sass,  __construct,     NULL, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
     PHP_ME(Sass,  parse,     NULL, ZEND_ACC_PUBLIC)
     PHP_ME(Sass,  parse_file,     NULL, ZEND_ACC_PUBLIC)
-    PHP_ME(Sass,  parse_directory,     NULL, ZEND_ACC_PUBLIC)
     {NULL, NULL, NULL}
 };
 
@@ -64,7 +101,7 @@ static PHP_MINIT_FUNCTION(sass)
 static PHP_MINFO_FUNCTION(sass)
 {
 	php_info_print_table_start();
-	php_info_print_table_row(2, "Version", SASS_VERSION);
+	php_info_print_table_row(2, "version", SASS_VERSION);
 	php_info_print_table_end();
 }
 
