@@ -23,11 +23,11 @@ PHP_METHOD(Sass, parse)
 
 	if (context->error_status)
 	{
-		// throw error
+		RETURN_STRING(context->error_message, 1);
 	}
 	else if (context->output_string)
 	{
-		RETURN_STRING(context->output_string, 0);
+		RETURN_STRING(context->output_string, 1);
 	}
 
 	sass_free_context(context);
