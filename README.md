@@ -59,3 +59,8 @@ If there's a problem, the extension will throw a `SassException`:
 
         $css = FALSE;
     }
+
+## Changelog
+
+**Version 0.1.0 - IN DEVELOPMENT**
+* Initial release
