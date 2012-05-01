@@ -2,6 +2,14 @@
 
 The `sass` extension for PHP gives you an object-oriented system of parsing [Sass](http://sass-lang.com/) from within your PHP applications. Under the hood it uses [libsass](https://github.com/hcatlin/libsass) to provide super speedy and compatible Sass parsing.
 
+## What's Sass?
+
+Sass is a CSS pre-processor language to add on exciting, new, awesome features to CSS. Sass was the first language of its kind and by far the most mature and up to date codebase.
+
+Sass was originally created by Hampton Catlin ([@hcatlin](http://twitter.com/hcatlin)). The extension and continuing evolution of the language has all been the result of years of work by Nathan Weizenbaum ([@nex3](http://twitter.com/nex3)) and Chris Eppstein ([@chriseppstein](http://twitter.com/chriseppstein)).
+
+For more information about Sass itself, please visit [http://sass-lang.com](http://sass-lang.com)
+
 ## Installation
 
 Currently, the only way to install the extension is manually:
