@@ -16,7 +16,7 @@
  * ------------------------------------------------------------ */
 
 /**
- * $sass->parse(string $source);
+ * $sass->parse(string $source, [  ]);
  *
  * Parse a string of Sass; a basic input -> output affair.
  */
@@ -161,6 +161,13 @@ static PHP_MINIT_FUNCTION(sass)
 	sass_ce = zend_register_internal_class(&ce TSRMLS_CC);
 	INIT_CLASS_ENTRY(exception_ce, "SassException", NULL);
     sass_exception_ce = zend_register_internal_class_ex(&exception_ce, sass_get_exception_base(), NULL TSRMLS_CC);
+
+	#define REGISTER_SASS_CLASS_CONST_LONG(name, value) zend_declare_class_constant_long(sass_ce, ZEND_STRS( #name ) - 1, value TSRMLS_CC)
+
+    REGISTER_SASS_CLASS_CONST_LONG("STYLE_NESTED", SASS_STYLE_NESTED);
+    REGISTER_SASS_CLASS_CONST_LONG("STYLE_EXPANDED", SASS_STYLE_EXPANDED);
+    REGISTER_SASS_CLASS_CONST_LONG("STYLE_COMPACT", SASS_STYLE_COMPACT);
+    REGISTER_SASS_CLASS_CONST_LONG("STYLE_COMPRESSED", SASS_STYLE_COMPRESSED);
 
 	return SUCCESS;
 }
