@@ -6,5 +6,5 @@ if test "$PHP_SASS" != "no"; then
 
   LDFLAGS="-lsass -L/Users/jamierumbelow/Sites/sassphp/lib/libsass/"
 
-  PHP_NEW_EXTENSION(sass, "src/sass.c", $ext_shared)
+  PHP_NEW_EXTENSION(sass, src/sass.c src/utilities.c, $ext_shared)
 fi
