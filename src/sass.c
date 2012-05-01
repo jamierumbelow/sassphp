@@ -83,8 +83,8 @@ PHP_METHOD(Sass, parse_file)
  * ------------------------------------------------------------ */
 
 zend_function_entry sass_methods[] = {
-    PHP_ME(Sass,  parse,     NULL, ZEND_ACC_PUBLIC)
-    PHP_ME(Sass,  parse_file,     NULL, ZEND_ACC_PUBLIC)
+    PHP_ME(Sass,  parse,     NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+    PHP_ME(Sass,  parse_file,     NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
     {NULL, NULL, NULL}
 };
 

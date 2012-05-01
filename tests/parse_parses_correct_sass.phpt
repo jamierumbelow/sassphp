@@ -5,8 +5,7 @@ parse() parses correct Sass
 --FILE--
 <?php 
 
-$sass = new Sass;
-$css = $sass->parse('
+$css = Sass::parse('
 
 table.hl {
   margin: 2em 0;
