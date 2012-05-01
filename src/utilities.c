@@ -6,6 +6,9 @@
  * Copyright (c)2012 Jamie Rumbelow <http://jamierumbelow.net>
  */
 
+#include <string.h>
+#include <ctype.h>
+
 #include "utilities.h"
 
 /**
