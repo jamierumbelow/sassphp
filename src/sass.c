@@ -6,6 +6,8 @@
  * Copyright (c)2012 Jamie Rumbelow <http://jamierumbelow.net>
  */
 
+#include <stdio.h>
+
 #include "php_sass.h"
 #include "utilities.h"
 
@@ -82,6 +84,16 @@ PHP_METHOD(Sass, parse_file)
 	// Grab the file name from the function
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &file, &file_len) == FAILURE)
 	{
+		return;
+	}
+
+	// First, do a little checking of our own. Does the file exist?
+	if( access( file, F_OK ) == -1 )
+	{
+		char err[200];
+		sprintf(err, "File %s could not be found", file);
+
+		zend_throw_exception(sass_exception_ce, err, 0 TSRMLS_CC);
 		return;
 	}
 
