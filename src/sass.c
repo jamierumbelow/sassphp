@@ -47,8 +47,7 @@ PHP_METHOD(Sass, parse)
 	// Check the context for any errors...
 	if (context->error_status)
 	{
-		// @todo throw an exception!
-		RETURN_STRING(context->error_message, 1);
+		zend_throw_exception(sass_exception_ce, context->error_message, 0 TSRMLS_CC);
 	}
 
 	// Do we have an output?
@@ -79,6 +78,15 @@ PHP_METHOD(Sass, parse_file)
 }
 
 /* --------------------------------------------------------------
+ * EXCEPTION HANDLING
+ * ------------------------------------------------------------ */
+
+zend_class_entry *sass_get_exception_base()
+{
+    return zend_exception_get_default(TSRMLS_C);
+}
+
+/* --------------------------------------------------------------
  * PHP EXTENSION INFRASTRUCTURE
  * ------------------------------------------------------------ */
 
@@ -91,9 +99,12 @@ zend_function_entry sass_methods[] = {
 static PHP_MINIT_FUNCTION(sass)
 {
 	zend_class_entry ce;
+	zend_class_entry exception_ce;
 
 	INIT_CLASS_ENTRY(ce, "Sass", sass_methods);
 	sass_ce = zend_register_internal_class(&ce TSRMLS_CC);
+	INIT_CLASS_ENTRY(exception_ce, "SassException", NULL);
+    sass_exception_ce = zend_register_internal_class_ex(&exception_ce, sass_get_exception_base(0 TSRMLS_CC), NULL TSRMLS_CC);
 
 	return SUCCESS;
 }

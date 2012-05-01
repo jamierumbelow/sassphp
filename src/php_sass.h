@@ -18,12 +18,15 @@
 #include <php.h>
 #include <ext/standard/info.h>
 #include <Zend/zend_extensions.h>
+#include <Zend/zend_exceptions.h>
 
 #include "lib/libsass/sass_interface.h"
 
 zend_class_entry *sass_ce;
+zend_class_entry *sass_exception_ce;
 
-PHP_METHOD(Sass, __construct);
+zend_class_entry *sass_get_exception_base();
+
 PHP_METHOD(Sass, parse);
 PHP_METHOD(Sass, parse_file);
 
