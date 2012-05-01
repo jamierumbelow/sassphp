@@ -7,6 +7,7 @@
  */
 
 #include "php_sass.h"
+#include "utilities.h"
 
 /* --------------------------------------------------------------
  * Sass
@@ -47,7 +48,7 @@ PHP_METHOD(Sass, parse)
 	// Check the context for any errors...
 	if (context->error_status)
 	{
-		zend_throw_exception(sass_exception_ce, context->error_message, 0 TSRMLS_CC);
+		zend_throw_exception(sass_exception_ce, trim(context->error_message), 0 TSRMLS_CC);
 	}
 
 	// Do we have an output?
