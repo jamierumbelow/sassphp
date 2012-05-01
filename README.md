@@ -13,15 +13,21 @@ Remember to grab your submodules:
 	$ git submodule init
 	$ git submodule update
 
-...and compile!
+...and compile it! I've written a little PHP script to do all the stuff you need to do:
 
-	$ rake
+	$ php install.php
 
-The rake task will run the tests as well, so you'll have some output there.
+Run the tests:
 
-Once compiled, you can install with `make`:
+    $ make test
+
+Finally, you can install with `make`:
 
 	$ make install
+
+And then add it to your _php.ini_:
+
+    extension=sass.so
 
 ## Usage
 
