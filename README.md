@@ -32,3 +32,16 @@ This extension has a very simple API:
 You can parse a file with `parse_file()`:
 
 	$css = Sass::parse_file('path_to_file.scss');
+
+If there's a problem, the extension will throw a `SassException`:
+
+    try
+    {
+        $css = Sass::parse('dayrui3dui36di37');
+    }
+    catch (SassException $e)
+    {
+        // $e->getMessage() - ERROR -- , line 1: invalid top-level expression
+
+        $css = FALSE;
+    }
