@@ -177,6 +177,7 @@ static PHP_MINIT_FUNCTION(sass)
 static PHP_MINFO_FUNCTION(sass)
 {
 	php_info_print_table_start();
+	php_info_print_table_row(2, "sass support", "enabled");
 	php_info_print_table_row(2, "version", SASS_VERSION);
 	php_info_print_table_end();
 }
