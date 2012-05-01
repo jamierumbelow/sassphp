@@ -81,9 +81,10 @@ PHP_METHOD(Sass, parse_file)
 	// We need a file name and a length
 	char *file;
 	int file_len;
+	int style = SASS_STYLE_NESTED;
 
 	// Grab the file name from the function
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &file, &file_len) == FAILURE)
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s|l", &file, &file_len, &style) == FAILURE)
 	{
 		return;
 	}
@@ -103,7 +104,7 @@ PHP_METHOD(Sass, parse_file)
 	
 	// Default options
 	context->options.include_paths = "";
-	context->options.output_style = SASS_STYLE_NESTED;
+	context->options.output_style = style;
 
 	// File time
 	context->input_path = file;
