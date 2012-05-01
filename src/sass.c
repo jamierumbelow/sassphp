@@ -22,12 +22,13 @@
  */
 PHP_METHOD(Sass, parse)
 {
-	// Define our source string and source string length
+	// Define our parameters as local variables
 	char *source;
 	int source_len;
+	int style = SASS_STYLE_NESTED;
 
 	// Use zend_parse_parameters() to grab our source from the function call
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &source, &source_len) == FAILURE)
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s|l", &source, &source_len, &style) == FAILURE)
 	{
 		return;
 	}
@@ -38,7 +39,7 @@ PHP_METHOD(Sass, parse)
 	// We're not including anything and for the time being we only want to support
 	// the nested style of output and not compressed.
 	context->options.include_paths = "";
-	context->options.output_style = SASS_STYLE_NESTED;
+	context->options.output_style = style;
 
 	// "Hand over the source, buddy!"
 	// "Which one, béchamel or arrabbiata?"
@@ -164,10 +165,10 @@ static PHP_MINIT_FUNCTION(sass)
 
 	#define REGISTER_SASS_CLASS_CONST_LONG(name, value) zend_declare_class_constant_long(sass_ce, ZEND_STRS( #name ) - 1, value TSRMLS_CC)
 
-    REGISTER_SASS_CLASS_CONST_LONG("STYLE_NESTED", SASS_STYLE_NESTED);
-    REGISTER_SASS_CLASS_CONST_LONG("STYLE_EXPANDED", SASS_STYLE_EXPANDED);
-    REGISTER_SASS_CLASS_CONST_LONG("STYLE_COMPACT", SASS_STYLE_COMPACT);
-    REGISTER_SASS_CLASS_CONST_LONG("STYLE_COMPRESSED", SASS_STYLE_COMPRESSED);
+    REGISTER_SASS_CLASS_CONST_LONG(STYLE_NESTED, SASS_STYLE_NESTED);
+    REGISTER_SASS_CLASS_CONST_LONG(STYLE_EXPANDED, SASS_STYLE_EXPANDED);
+    REGISTER_SASS_CLASS_CONST_LONG(STYLE_COMPACT, SASS_STYLE_COMPACT);
+    REGISTER_SASS_CLASS_CONST_LONG(STYLE_COMPRESSED, SASS_STYLE_COMPRESSED);
 
 	return SUCCESS;
 }
