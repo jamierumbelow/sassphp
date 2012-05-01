@@ -75,7 +75,50 @@ PHP_METHOD(Sass, parse)
  */
 PHP_METHOD(Sass, parse_file)
 {
+	// We need a file name and a length
+	char *file;
+	int file_len;
 
+	// Grab the file name from the function
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &file, &file_len) == FAILURE)
+	{
+		return;
+	}
+
+	// Create a new sass_file_context
+	struct sass_file_context* context = sass_new_file_context();
+	
+	// Default options
+	context->options.include_paths = "";
+	context->options.output_style = SASS_STYLE_NESTED;
+
+	// File time
+	context->input_path = file;
+
+	// Compile it!
+	sass_compile_file(context);
+
+	// Check the context for any errors...
+	if (context->error_status)
+	{
+		zend_throw_exception(sass_exception_ce, trim(context->error_message), 0 TSRMLS_CC);
+	}
+
+	// Do we have an output?
+	else if (context->output_string)
+	{
+		// Send it over to PHP.
+		RETURN_STRING(context->output_string, 1);
+	}
+
+	// There's been a major issue
+	else
+	{
+		// unknown internal error... throw an exception?
+	}
+
+	// Over and out.
+	sass_free_file_context(context);
 }
 
 /* --------------------------------------------------------------
@@ -105,7 +148,7 @@ static PHP_MINIT_FUNCTION(sass)
 	INIT_CLASS_ENTRY(ce, "Sass", sass_methods);
 	sass_ce = zend_register_internal_class(&ce TSRMLS_CC);
 	INIT_CLASS_ENTRY(exception_ce, "SassException", NULL);
-    sass_exception_ce = zend_register_internal_class_ex(&exception_ce, sass_get_exception_base(0 TSRMLS_CC), NULL TSRMLS_CC);
+    sass_exception_ce = zend_register_internal_class_ex(&exception_ce, sass_get_exception_base(), NULL TSRMLS_CC);
 
 	return SUCCESS;
 }
